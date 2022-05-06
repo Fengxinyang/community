@@ -142,7 +142,7 @@ public class UserService implements CommunityConstant {
 
         //验证密码
         password = CommunityUtil.md5(password + user.getSalt());
-        if (user.getPassword().equals(password)){
+        if (!user.getPassword().equals(password)){
             map.put("passwordMsg", "密码不正确");
             return map;
         }
@@ -162,5 +162,38 @@ public class UserService implements CommunityConstant {
 
     public void logout(String ticket){
         loginTicketMapper.updateStatus(ticket, 1);
+    }
+
+    public LoginTicket findLoginTicket(String ticket){
+        return loginTicketMapper.selectByTicket(ticket);
+    }
+
+    public int updateHeader(int userId, String headerUrl){
+        return userMapper.updateHeader(userId, headerUrl);
+    }
+
+    public Map<String, Object> updatePassword(int userId, String oldPassword, String newPassword){
+        Map<String, Object> map = new HashMap<>();
+        if (StringUtils.isBlank(oldPassword)){
+            map.put("oldPasswordMsg", "旧密码不能为空");
+            return map;
+        }
+        if (StringUtils.isBlank(newPassword)){
+            map.put("newPasswordMsg", "新密码不能为空");
+            return map;
+        }
+
+        //验证旧密码
+        User user = userMapper.selectById(userId);
+        oldPassword = CommunityUtil.md5(oldPassword + user.getSalt());
+        if (!user.getPassword().equals(oldPassword)){
+            map.put("oldPasswordMsg", "原始密码不正确，请重新输入");
+            return map;
+        }
+
+        //更新密码
+        newPassword = CommunityUtil.md5(newPassword + user.getSalt());
+        userMapper.updatePassword(userId, newPassword);
+        return map;
     }
 }
