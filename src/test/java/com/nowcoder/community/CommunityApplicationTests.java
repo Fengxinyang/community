@@ -62,4 +62,5 @@ class CommunityApplicationTests implements ApplicationContextAware {
 		alphaDao.select();
 		System.out.println(simpleDateFormat.format(new Date()));
 	}
+
 }
