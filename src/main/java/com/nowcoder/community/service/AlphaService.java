@@ -72,8 +72,6 @@ public class AlphaService {
         discussPost.setCreateTime(new Date());
         discussPostMapper.insertDiscussPost(discussPost);
 
-        Integer.valueOf("abc");
-
         return "ok";
     }
 
