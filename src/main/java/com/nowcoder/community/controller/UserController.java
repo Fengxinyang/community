@@ -69,7 +69,7 @@ public class UserController implements CommunityConstant{
         }
 
         String fileName = headerImage.getOriginalFilename();
-        String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
+        String suffix = fileName.substring(fileName.lastIndexOf("."));
         if (StringUtils.isBlank(suffix)){
             model.addAttribute("error", "文件格式不正确！");
             return "/site/setting";
