@@ -129,7 +129,6 @@ public class UserController implements CommunityConstant{
             model.addAttribute("newPasswordMsg", map.get("newPasswordMsg"));
             return "/site/setting";
         }
-
     }
 
     // 个人主页
